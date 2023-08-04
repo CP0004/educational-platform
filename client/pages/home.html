@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn School</title>
+</head>
+
+<body>
+
+    <!--Table Profile -->
+    <div class="container mx-auto mt-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody id="home_tb_user_data">
+            </tbody>
+        </table>
+    </div>
+
+    <!--Table Subject -->
+    <div class="container mx-auto mt-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Pass Mark</th>
+                    <th scope="col">Student Mark</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody id="home_tb_subject_data">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        //-- get data Profiles and get data Courses Real-Time
+        $(document).ready(function () {
+            const usersTable = $("#home_tb_user_data");
+            const subjectsTable = $("#home_tb_subject_data");
+
+            function updateUserTable(user) {
+                usersTable.empty();
+                const row = $("<tr>");
+                row.append($("<td>").text(user.username));
+                row.append($("<td>").text(user.email));
+                usersTable.append(row);
+            }
+
+            function updateSubjectTable(subjects) {
+                subjectsTable.empty();
+                for (const subject of subjects) {
+                    if (subject.id == 0) continue;
+
+                    const row = $("<tr>");
+                    row.append($("<td>").text(subject.coursname));
+                    row.append($("<td>").text(subject.passmark));
+                    row.append($("<td>").text(subject.studentmark));
+                    row.append($("<td>").text(subject.studentmark >= subject.passmark ? "successful" : subject.studentmark == 0 ? "no result announced" : "failed"));
+                    subjectsTable.append(row);
+                }
+            }
+
+            var previousData;
+            function fetchUserData() {
+                const idUserBase = sessionStorage.getItem("idUserBase");
+                if (!idUserBase) return;
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/getDataUser.php",
+                    data: { id: idUserBase },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.message === "fail") {
+                            $.ajax({
+                                url: "pages/login.html",
+                                success: function (data) {
+                                    $("body").html(data);
+                                }
+                            });
+                        } else if (data.message === "problem") {
+                            alert("There is an error in the information or data processing, please try again");
+                        } else if (data.users.length > 0) {
+                            if (JSON.stringify(data) === JSON.stringify(previousData))
+                                return;
+                            previousData = data;
+                            updateUserTable(data.users[0]);
+                            updateSubjectTable(data.subject);
+                        } else {
+                            alert("Unexpected error, please try again later");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending");
+                    }
+                });
+            }
+
+            setInterval(fetchUserData, 100);
+        });
+
+    </script>
+
+</body>
+
+</html>

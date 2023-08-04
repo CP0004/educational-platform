@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn School</title>
+</head>
+
+<body>
+
+    <!-- Form Data Login  -->
+    <div class="d-flex justify-content-center align-items-center m-auto my-5">
+
+        <form class="w-50">
+
+            <h6 class="text-center display-4 fw-bold">LOGIN</h6>
+
+            <div class="form-group mb-2 w-100">
+                <label for="login-et-email">Email</label>
+                <input type="email" class="form-control" id="login-et-email" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group mb-4 w-100">
+                <label class="form-label" for="login-et-password">Password</label>
+                <input type="password" id="login-et-password" class="form-control" />
+            </div>
+
+            <button type="button" id="login-btn-login" class="btn btn-primary mb-2 me-2 w-100">Login</button>
+
+            <div class="d-flex flex-row justify-content-end w-100">
+                <button type="button" id="login-btn-to-page-register"
+                    class="btn mb-2 ms-2 text-decoration-underline">Register</button>
+            </div>
+
+            <P id="login-tv-alert" class="colo"></P>
+        </form>
+
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+
+            //-- goto page Register
+            $("#login-btn-to-page-register").click(function () {
+                $.ajax({
+                    url: "pages/register.html",
+                    success: function (data) {
+                        $("body").html(data);
+                    }
+                });
+            });
+
+            //-- check felid and login logic
+            $("#login-btn-login").click(function () {
+                if ($("#login-et-email").val() !== "" && $("#login-et-password").val() !== "") {
+                    if (isValidEmail($("#login-et-email").val())) {
+                        $("#login-tv-alert").text("");
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost/Lrean/server/auth/login.php",
+                            data: { email: $("#login-et-email").val().trim(), password: $("#login-et-password").val().trim() },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.message === "fail")
+                                    $("#login-tv-alert").text("The email or password is wrong, please check them and register again");
+                                else if (data.message === "problem")
+                                    $("#login-tv-alert").text("There is an error in the information or data processing, please try again");
+                                else if (data[0].id >= 1) {
+                                    if (data[0].isActive === 1) {
+                                        $("#register-tv-alert").text("");
+                                        sessionStorage.setItem("idUserBase", data[0].id);
+                                        if (data[0].isTeacher === 1) {
+                                            $.ajax({
+                                                url: "pages/admin.html",
+                                                success: function (data) {
+                                                    $("body").html(data);
+                                                }
+                                            });
+                                        } else {
+                                            $.ajax({
+                                                url: "pages/home.html",
+                                                success: function (data) {
+                                                    $("body").html(data);
+                                                }
+                                            });
+                                        }
+                                    } else
+                                        $("#login-tv-alert").text("This account is inactive, please wait for the administrator to activate your account");
+                                } else
+                                    $("#login-tv-alert").text("Unexpected error, please try again later");
+                            },
+                            error: function (xhr, status, error) {
+                                $("#login-tv-alert").text("There is an error in the connection or an error in sending");
+                            }
+                        });
+                    } else
+                        $("#login-tv-alert").text("The email must be real, please verify it");
+                } else
+                    $("#login-tv-alert").text("Please fill in the fields in the information");
+            });
+        });
+
+        function isStrongPassword(passwordCheck) {
+            var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return passwordRegex.test(passwordCheck);
+        }
+
+        function isValidEmail(emailCheck) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(emailCheck);
+        }
+
+    </script>
+
+</body>
+
+</html>

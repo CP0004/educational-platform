@@ -1,0 +1,26 @@
+#login-tv-alert {
+    word-wrap: break-word;
+    color: #e3c500;
+}
+
+#register-tv-alert {
+    word-wrap: break-word;
+    color: #e3c500;
+}
+
+#register-tv-done {
+    word-wrap: break-word;
+    color: #17e300;
+}
+
+.delete {
+    background-color: #e30000;
+}
+
+.active {
+    background-color: #00e308;
+}
+
+.edit {
+    background-color: #0084e3;
+}

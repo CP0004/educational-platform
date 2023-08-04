@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- Nav Button -->
+    <div class="container mt-5">
+        <div class="d-flex justify-content-start align-items-center">
+            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal"
+                data-bs-target="#admin_md_add_user">
+                Add User</button>
+            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal"
+                data-bs-target="#admin_md_add_course">
+                Add Course</button>
+            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal"
+                data-bs-target="#admin_md_add_subject">
+                Add Subject</button>
+            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal"
+                data-bs-target="#admin_md_set_mark">
+                Set Mark</button>
+        </div>
+    </div>
+
+    <!-- Table Users -->
+    <div class="container mx-auto mt-5">
+        <h6 class="text-start fs-2 fw-bold">Users</h6>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">Active</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="admin_tb_users_data">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Table Courses -->
+    <div class="container mx-auto mt-5">
+        <h6 class="text-start fs-2 fw-bold">Courses</h6>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Pass Mark</th>
+                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="admin_tb_courses_data">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Add Users -->
+    <div class="modal" id="admin_md_add_user">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center m-auto my-5">
+                        <form class="w-50">
+
+                            <h6 class="text-center display-4 fw-bold">ADD USERS</h6>
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_username">Username</label>
+                                <input type="text" id="admin_et_username" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_email">Email</label>
+                                <input type="email" id="admin_et_email" class="form-control"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <div class="form-group mb-2 w-100">
+                                <label class="form-label" for="admin_et_password">Password</label>
+                                <input type="password" id="admin_et_password" class="form-control" />
+                            </div>
+
+                            <button type="button" id="admin_btn_add_user"
+                                class="btn btn-primary mb-2 me-2 w-100">Add</button>
+
+                            <P id="admin_tv_alert"></P>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Course -->
+    <div class="modal" id="admin_md_add_course">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center m-auto my-5">
+                        <form class="w-50">
+
+                            <h6 class="text-center display-4 fw-bold">ADD COURSES</h6>
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_coursename">course name</label>
+                                <input type="text" id="admin_et_coursename" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_passmark">pass mark</label>
+                                <input type="email" id="admin_et_passmark" class="form-control"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <button type="button" id="admin_btn_add_course"
+                                class="btn btn-primary mb-2 me-2 w-100">Add</button>
+
+                            <P id="admin_tv_alertC"></P>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Subject -->
+    <div class="modal" id="admin_md_add_subject">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Add Subject</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body overflow-y-auto">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="text-start fs-5 fw-bold">Users</h6>
+                            <div class="list-group" id="admin_tb_users_data_subject" role="tablist">
+
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <h6 class="text-start fs-5 fw-bold">Courses</h6>
+                            <div class="list-group" id="admin_tb_courses_data_subject" role="tablist">
+                                <p class="list-group-item list-group-item-action m-0" data-bs-toggle="list" role="tab">1
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_add_subject" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Set Mark -->
+    <div class="modal w-100" id="admin_md_set_mark">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Set Mark</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body overflow-y-auto">
+                    <div class="row">
+                        <div class="col-4">
+                            <h6 class="text-start fs-5 fw-bold">Users</h6>
+                            <div class="list-group" id="admin_tb_users_data_mark" role="tablist">
+
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <h6 class="text-start fs-5 fw-bold">Subject</h6>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Course Name</th>
+                                        <th scope="col">Pass Mark</th>
+                                        <th scope="col">Student Mark</th>
+                                        <th scope="col">Edit Mark</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="home_tb_subject_data_mark">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_add_subject" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete User -->
+    <div class="modal" id="admin_md_delete_user">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Are you sure you want to delete ?</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_delete_user" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal inactive User -->
+    <div class="modal" id="admin_md_inactive_user">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Are you sure you want to inactive ?</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_inactive_user" class="btn btn-secondary">Inactive</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal activated User -->
+    <div class="modal" id="admin_md_activated_user">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Are you sure you want to activated ?</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_activated_user" class="btn btn-success">Activated</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete Courses -->
+    <div class="modal" id="admin_md_delete_course">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Are you sure you want to delete courses ?</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_delete_course" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Update Course -->
+    <div class="modal" id="admin_md_update_course">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center m-auto my-5">
+                        <form class="w-50">
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_coursename">course name</label>
+                                <input type="text" id="admin_et_update_coursename" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-2 w-100">
+                                <label for="admin_et_passmark">pass mark</label>
+                                <input type="email" id="admin_et_update_passmark" class="form-control"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <button type="button" id="admin_btn_update_course"
+                                class="btn btn-primary mb-2 me-2 w-100">Update</button>
+
+                            <P id="admin_tv_alert_update_course"></P>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Update Subject Mark -->
+    <div class="modal" id="admin_md_update_subject_mark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center my-5">
+                        <form class="">
+                            <div class="form-group mb-2">
+                                <label for="admin_et_subjectmark">pass mark</label>
+                                <input type="email" id="admin_et_subjectmark" class="form-control"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <P id="admin_tv_alert_update_subject_mark"></P>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="admin_btn_update_subject_mark" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        //-- Default Setting
+        $("#admin_btn_add_subject").prop("disabled", true);
+        sessionStorage.setItem("idUserCheck", "");
+        sessionStorage.setItem("idCourseCheck", "");
+        sessionStorage.setItem("coursenameCheck", "");
+        sessionStorage.setItem("passmarkCheck", "");
+
+        //-- logic
+        $(document).ready(function () {
+
+            //-- get data User and Courses and Subject Real-Time
+            function updateUsersTable(users) {
+                if (users.length > 0) {
+                    const adminTableUsersData = $("#admin_tb_users_data");
+                    const adminTableUsersDataSubject = $("#admin_tb_users_data_subject");
+                    const adminTableUsersDataMark = $("#admin_tb_users_data_mark");
+                    adminTableUsersData.empty();
+                    adminTableUsersDataSubject.empty();
+                    adminTableUsersDataMark.empty();
+
+                    const currentUserId = sessionStorage.getItem("idUserBase");
+                    for (const user of users) {
+                        if (user.id == currentUserId || user.id == 0) continue;
+
+
+                        const isActive = user.isActive;
+                        const actionButtonLabel = isActive ? "inactive" : "activated";
+                        const row = $("<tr>");
+                        row.append($("<td>").text(user.username));
+                        row.append($("<td>").text(user.email));
+                        // row.append($("<td>").text(user.id));
+                        row.append($("<td>").html(`<button class="btn ${isActive ? "btn-success" : "btn-secondary"}" data-bs-toggle="modal" data-bs-target="#admin_md_${isActive ? "inactive" : "activated"}_user" onclick="getIdUser(${user.id})">${actionButtonLabel}</button>`));
+                        row.append($("<td>").html(`<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#admin_md_delete_user" onclick="getIdUser(${user.id})">delete</button>`));
+                        adminTableUsersData.append(row);
+
+                        const rowSubject = $("<p>", {
+                            "class": "list-group-item list-group-item-action m-0 text-center",
+                            "data-bs-toggle": "list",
+                            "role": "tab",
+                            "click": function () {
+                                getDataSubjectUser(user.id);
+                            },
+                            "text": user.username
+                        });
+                        adminTableUsersDataSubject.append(rowSubject);
+
+                        const rowMark = $("<p>", {
+                            "class": "list-group-item list-group-item-action m-0 text-center",
+                            "data-bs-toggle": "list",
+                            "role": "tab",
+                            "click": function () {
+                                getIdUserSubject(user.id);
+                            },
+                            "text": user.username
+                        });
+                        adminTableUsersDataMark.append(rowMark);
+
+                    }
+                }
+            }
+
+            function updateCoursesTable(courses) {
+                if (courses.length > 0) {
+                    const adminTableCoursesData = $("#admin_tb_courses_data");
+                    const adminTableCoursesDataSubject = $("#admin_tb_courses_data_subject");
+                    adminTableCoursesData.empty();
+                    adminTableCoursesDataSubject.empty();
+
+                    for (const course of courses) {
+                        if (course.id == 0) continue;
+
+                        const row = $("<tr>");
+                        row.append($("<td>").text(course.coursname));
+                        row.append($("<td>").text(course.passmark));
+                        // row.append($("<td>").text(course.id));
+                        row.append($("<td>").html(`<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#admin_md_update_course" onclick="getIdCourse(${course.id}, '${course.coursname}', ${course.passmark})">edit</button>`));
+                        row.append($("<td>").html(`<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#admin_md_delete_course" onclick="getIdCourse(${course.id})">delete</button>`));
+                        adminTableCoursesData.append(row);
+
+                        const rowSubject = $("<p>", {
+                            "class": "list-group-item list-group-item-action m-0 text-center",
+                            "data-bs-toggle": "list",
+                            "role": "tab",
+                            "click": function () {
+                                getDataSubjectCourse(course.id, course.coursname, course.passmark);
+                            },
+                            "text": course.coursname
+                        });
+                        adminTableCoursesDataSubject.append(rowSubject);
+                    }
+                }
+            }
+
+            function updateSubjectTable(subjects) {
+                if (subjects.length > 0) {
+                    const adminTableSubjectMark = $("#home_tb_subject_data_mark");
+                    adminTableSubjectMark.empty();
+                    for (const subject of subjects) {
+                        if (subject.id == 0) continue;
+
+                        const row = $("<tr>");
+                        row.append($("<td>").text(subject.coursname));
+                        row.append($("<td>").text(subject.passmark));
+                        row.append($("<td>").text(subject.studentmark));
+                        row.append($("<td>").html(`<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#admin_md_update_subject_mark" onclick="getIdSubject(${subject.id}, ${subject.studentmark})">edit</button>`));
+                        adminTableSubjectMark.append(row);
+                    }
+                }
+            }
+
+            var previousData;
+            var previousDataSubject;
+            function fetchAdminData() {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/getDataAdmin.php",
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+                        if (hasChanged = JSON.stringify(data) === JSON.stringify(previousData)) return;
+
+                        previousData = data
+                        if (data.message === "fail") {
+                            alert("There are no data");
+                        } else {
+                            updateUsersTable(data.users);
+                            updateCoursesTable(data.courses);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending");
+                    }
+                });
+
+
+                const idUserSubject = sessionStorage.getItem("idUserSubject");
+                if (!idUserSubject) return;
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/getDataSubject.php",
+                    data: { id: idUserSubject },
+                    dataType: "json",
+                    success: function (data) {
+                        if (hasChanged = JSON.stringify(data) === JSON.stringify(previousDataSubject))
+                            return;
+                        previousDataSubject = data
+                        if (data.message === "fail") {
+                            alert("There are no data");
+                        } else {
+                            updateSubjectTable(data);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending");
+                    }
+                });
+            }
+
+            setInterval(fetchAdminData, 100);
+
+            //-- check felid and add users logic
+            $("#admin_btn_add_user").click(function () {
+                const username = $("#admin_et_username").val().trim();
+                const email = $("#admin_et_email").val().trim();
+                const password = $("#admin_et_password").val();
+
+                if (username === "" || email === "" || password === "") {
+                    $("#admin_tv_alert").text("Please fill in all the fields.");
+                    return;
+                }
+
+                if (!isValidUsername(username)) {
+                    $("#admin_tv_alert").text("Username must be between 4 and 8 characters.");
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    $("#admin_tv_alert").text("Please enter a valid email address.");
+                    return;
+                }
+
+                if (!isStrongPassword(password)) {
+                    $("#admin_tv_alert").text("The password should start with a letter, be longer than 8 characters, and contain symbols and numbers.");
+                    return;
+                }
+
+                $("#admin_tv_alert").text("");
+
+                const dataRequest = { username, email, password };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/addUser.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        switch (data.message) {
+                            case "fail":
+                                $("#admin_tv_alert").text("The account creation process was not successful, please try again");
+                                break;
+                            case "problem":
+                                $("#admin_tv_alert").text("There is an error in the information or data processing, please try again");
+                                break;
+                            case "exist":
+                                $("#admin_tv_alert").text("Account already exists, please enter another account");
+                                break;
+                            case "success":
+                                $("#admin_tv_alert").text("");
+                                $("#admin_et_username").val("");
+                                $("#admin_et_email").val("");
+                                $("#admin_et_password").val("");
+                                $("#admin_md_add_user").modal("hide");
+                                break;
+                            default:
+                                $("#admin_tv_alert").text("Unexpected error, please try again later");
+                                break;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $("#admin_tv_alert").text("There is an error in the connection or an error in sending");
+                    }
+                });
+            });
+
+            //-- check felid and course add logic
+            $("#admin_btn_add_course").click(function () {
+                const coursename = $("#admin_et_coursename").val().trim();
+                const passmark = $("#admin_et_passmark").val().trim();
+
+                if (coursename === "" || passmark === "") {
+                    $("#admin_tv_alertC").text("Please fill in all the fields.");
+                    return;
+                }
+
+                if (!isValidCoursename(coursename)) {
+                    $("#admin_tv_alertC").text("Course name must be between 4 and 16 characters.");
+                    return;
+                }
+
+                if (!isValidPassmark(passmark)) {
+                    $("#admin_tv_alertC").text("Passmark must be a numeric value between 3 and 100.");
+                    return;
+                }
+
+                $("#admin_tv_alertC").text("");
+
+                const dataRequest = { coursename, passmark };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/addCourses.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        switch (data.message) {
+                            case "fail":
+                                $("#admin_tv_alertC").text("The course creation process was not successful, please try again");
+                                break;
+                            case "problem":
+                                $("#admin_tv_alertC").text("There is an error in the information or data processing, please try again");
+                                break;
+                            case "exist":
+                                $("#admin_tv_alertC").text("Course already exists, please enter another course name");
+                                break;
+                            case "success":
+                                $("#admin_tv_alertC").text("");
+                                $("#admin_et_coursename").val("");
+                                $("#admin_et_passmark").val("");
+                                $("#admin_md_add_course").modal("hide");
+                                break;
+                            default:
+                                $("#admin_tv_alertC").text("Unexpected error, please try again later");
+                                break;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $("#admin_tv_alertC").text("There is an error in the connection or an error in sending");
+                    }
+                });
+            });
+
+            //-- check and subject add logic
+            $("#admin_btn_add_subject").click(function () {
+                const coursename = sessionStorage.getItem("coursenameCheck");
+                const idCourse = sessionStorage.getItem("idCourseCheck");
+                const idUser = sessionStorage.getItem("idUserCheck");
+                const passmark = sessionStorage.getItem("passmarkCheck");
+
+                if (coursename === "" || idCourse === "" || idUser === "" || passmark === "")
+                    return;
+
+                const dataRequest = { coursename, idCourse, idUser, passmark };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/addSubject.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        switch (data.message) {
+                            case "fail":
+                                alert("The course creation process was not successful, please try again");
+                                break;
+                            case "problem":
+                                alert("There is an error in the information or data processing, please try again");
+                                break;
+                            case "exist":
+                                alert("Course already exists, please enter another course name");
+                            case "success":
+                                $("#admin_md_add_subject").modal("hide");
+                                sessionStorage.setItem("idUserCheck", "");
+                                sessionStorage.setItem("idCourseCheck", "");
+                                sessionStorage.setItem("coursenameCheck", "");
+                                sessionStorage.setItem("passmarkCheck", "");
+                                break;
+                            default:
+                                alert("Unexpected error, please try again later");
+                                break;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending");
+                    }
+                });
+            });
+
+            //-- delete user logic
+            $("#admin_btn_delete_user").click(function () {
+                const userId = sessionStorage.getItem("idUser");
+
+                if (!userId) {
+                    alert("User ID is missing. Please try again later.");
+                    return;
+                }
+
+                const dataRequest = { mode: "delete", id: userId };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesUsers.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.message === "fail") {
+                            alert("The account deletion process was not successful, please try again.");
+                        } else if (data.message === "success") {
+                            $("#admin_md_delete_user").modal("hide");
+                        } else {
+                            alert("Unexpected error, please try again later.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+            //-- inactive user logic
+            $("#admin_btn_inactive_user").click(function () {
+                const userId = sessionStorage.getItem("idUser");
+
+                if (!userId) {
+                    alert("User ID is missing. Please try again later.");
+                    return;
+                }
+
+                const dataRequest = { mode: "inactive", id: userId };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesUsers.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.message === "fail") {
+                            alert("The account deactivation process was not successful, please try again.");
+                        } else if (data.message === "success") {
+                            $("#admin_md_inactive_user").modal("hide");
+                        } else {
+                            alert("Unexpected error, please try again later.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+            //-- activated user logic
+            $("#admin_btn_activated_user").click(function () {
+                const userId = sessionStorage.getItem("idUser");
+
+                if (!userId) {
+                    alert("User ID is missing. Please try again later.");
+                    return;
+                }
+
+                const dataRequest = { mode: "activated", id: userId };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesUsers.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.message === "fail") {
+                            alert("The account activation process was not successful, please try again.");
+                        } else if (data.message === "success") {
+                            $("#admin_md_activated_user").modal("hide");
+                        } else {
+                            alert("Unexpected error, please try again later.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+            //-- delete course logic
+            $("#admin_btn_delete_course").click(function () {
+                const courseId = sessionStorage.getItem("idCourse");
+
+                if (!courseId) {
+                    alert("Course ID is missing. Please try again later.");
+                    return;
+                }
+
+                const dataRequest = { mode: "delete", id: courseId, coursename: "", passmark: "" };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesCourses.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.message === "fail") {
+                            alert("The course deletion process was not successful, please try again.");
+                        } else if (data.message === "success") {
+                            $("#admin_md_delete_course").modal("hide");
+                        } else {
+                            alert("Unexpected error, please try again later.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+            //-- check felid and course update logic
+            $("#admin_btn_update_course").click(function () {
+                const courseId = sessionStorage.getItem("idCourse");
+                const coursename = $("#admin_et_update_coursename").val().trim();
+                const passmark = $("#admin_et_update_passmark").val().trim();
+
+                if (!courseId) {
+                    alert("Course ID is missing. Please try again later.");
+                    return;
+                }
+
+                if (coursename === "" || passmark === "") {
+                    $("#admin_tv_alert_update_course").text("Please fill in all the fields.");
+                    return;
+                }
+
+                if (!isValidCoursename(coursename)) {
+                    $("#admin_tv_alert_update_course").text("Course name must be between 4 and 16 characters.");
+                    return;
+                }
+
+                if (!isValidPassmark(passmark)) {
+                    $("#admin_tv_alert_update_course").text("Passmark must be a numeric value between 3 and 400.");
+                    return;
+                }
+
+                $("#admin_tv_alert_update_course").text("");
+
+                const dataRequest = { mode: "edit", id: courseId, coursename, passmark };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesCourses.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        switch (data.message) {
+                            case "fail":
+                                $("#admin_tv_alert_update_course").text("The course update process was not successful, please try again.");
+                                break;
+                            case "problem":
+                                $("#admin_tv_alert_update_course").text("There is an error in the information or data processing, please try again.");
+                                break;
+                            case "exist":
+                                $("#admin_tv_alert_update_course").text("Course already exists, please enter another course name.");
+                                break;
+                            case "success":
+                                $("#admin_tv_alert_update_course").text("");
+                                $("#admin_md_update_course").modal("hide");
+                                break;
+                            default:
+                                $("#admin_tv_alert_update_course").text("Unexpected error, please try again later.");
+                                break;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $("#admin_tv_alert_update_course").text("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+            //-- check felid and subject update logic
+            $("#admin_btn_update_subject_mark").click(function () {
+                const subjectId = sessionStorage.getItem("idSubject");
+                const studentmark = $("#admin_et_subjectmark").val().trim();
+
+                if (!subjectId || !studentmark) {
+                    $("#admin_tv_alert_update_subject_mark").text("Course ID is missing. Please try again later.");
+                    return;
+                }
+
+                if (!isValidPassmark(studentmark)) {
+                    $("#admin_tv_alert_update_subject_mark").text("Passmark must be a numeric value between 3 and 400.");
+                    return
+                }
+
+                $("#admin_tv_alert_update_subject_mark").text("");
+
+                const dataRequest = { mode: "edit", id: subjectId, studentmark: studentmark };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/Lrean/server/logic/UtilitiesSubject.php",
+                    data: dataRequest,
+                    dataType: "json",
+                    success: function (data) {
+                        switch (data.message) {
+                            case "fail":
+                                $("#admin_tv_alert_update_subject_mark").text("The course update process was not successful, please try again.");
+                                break;
+                            case "problem":
+                                $("#admin_tv_alert_update_subject_mark").text("There is an error in the information or data processing, please try again.");
+                                break;
+                            case "success":
+                                $("#admin_tv_alert_update_subject_mark").text("");
+                                $("#admin_md_update_subject_mark").modal("hide");
+                                break;
+                            default:
+                                $("#admin_tv_alert_update_subject_mark").text("Unexpected error, please try again later.");
+                                break;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $("#admin_tv_alert_update_subject_mark").text("There is an error in the connection or an error in sending.");
+                    }
+                });
+            });
+
+        });
+
+        //Tools Function
+        function getIdUser(id) {
+            sessionStorage.setItem("idUser", id);
+        }
+
+        function getIdUserSubject(id) {
+            sessionStorage.setItem("idUserSubject", id);
+        }
+
+        function getIdSubject(id, studentmark) {
+            sessionStorage.setItem("idSubject", id);
+            $("#admin_et_subjectmark").val(studentmark);
+        }
+
+        function getIdCourse(id, coursename, passmark) {
+            sessionStorage.setItem("idCourse", id);
+            $("#admin_et_update_coursename").val(coursename);
+            $("#admin_et_update_passmark").val(passmark);
+        }
+
+        function getDataSubjectUser(idUser) {
+            sessionStorage.setItem("idUserCheck", idUser);
+
+            const coursenameCheck = sessionStorage.getItem("coursenameCheck");
+            const idCourseCheck = sessionStorage.getItem("idCourseCheck");
+            const idUserCheck = sessionStorage.getItem("idUserCheck");
+            const passmarkCheck = sessionStorage.getItem("passmarkCheck");
+            if (coursenameCheck && idCourseCheck && idUserCheck && passmarkCheck) {
+                $("#admin_btn_add_subject").prop("disabled", false);
+            } else {
+                $("#admin_btn_add_subject").prop("disabled", true);
+            }
+        }
+
+        function getDataSubjectCourse(idCourse, coursename, passmark) {
+            sessionStorage.setItem("idCourseCheck", idCourse);
+            sessionStorage.setItem("coursenameCheck", coursename);
+            sessionStorage.setItem("passmarkCheck", passmark);
+
+            const coursenameCheck = sessionStorage.getItem("coursenameCheck");
+            const idCourseCheck = sessionStorage.getItem("idCourseCheck");
+            const idUserCheck = sessionStorage.getItem("idUserCheck");
+            const passmarkCheck = sessionStorage.getItem("passmarkCheck");
+            if (coursenameCheck && idCourseCheck && idUserCheck && passmarkCheck) {
+                $("#admin_btn_add_subject").prop("disabled", false);
+            } else {
+                $("#admin_btn_add_subject").prop("disabled", true);
+            }
+        }
+
+        function isStrongPassword(passwordCheck) {
+            var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{7,}$/;
+            return passwordRegex.test(passwordCheck);
+        }
+
+        function isValidEmail(emailCheck) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(emailCheck);
+        }
+
+        function isValidUsername(usernameCheck) {
+            var usernameRegex = /^[A-Za-zأ-يءئؤإآa-zA-Z]{4,}$/;
+            return usernameRegex.test(usernameCheck);
+        }
+
+        function isValidCoursename(coursenameCheck) {
+            var coursenameRegex = /^[A-Za-zأ-يءئؤإآa-zA-Z]{3,}$/;
+            return coursenameRegex.test(coursenameCheck);
+        }
+
+        function isValidPassmark(passmarkCheck) {
+            var passmarkRegex = /^\d{1,3}$/;
+            return passmarkRegex.test(passmarkCheck);
+        }
+
+    </script>
+</body>
+
+</html>

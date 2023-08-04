@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn School</title>
+</head>
+
+<body>
+
+    <!-- Form Data Register  -->
+    <div class="d-flex justify-content-center align-items-center m-auto my-5">
+
+        <form class="w-50">
+
+            <h6 class="text-center display-4 fw-bold">REGISTER</h6>
+
+            <div class="form-group mb-2 w-100">
+                <label for="register-et-username">Username</label>
+                <input type="text" id="register-et-username" class="form-control">
+            </div>
+
+            <div class="form-group mb-2 w-100">
+                <label for="register-et-email">Email</label>
+                <input type="email" id="register-et-email" class="form-control" aria-describedby="emailHelp">
+            </div>
+
+            <div class="form-group mb-2 w-100">
+                <label class="form-label" for="register-et-password">Password</label>
+                <input type="password" id="register-et-password" class="form-control" />
+            </div>
+
+            <button type="button" id="register-btn-register" class="btn btn-primary mb-2 me-2 w-100">Register</button>
+
+            <div class="d-flex flex-row justify-content-end w-100">
+                <button type="button" id="register-btn-to-page-login"
+                    class="btn mb-2 ms-2 text-decoration-underline">login</button>
+            </div>
+
+            <P id="register-tv-alert"></P>
+            <P id="register-tv-done"></P>
+
+        </form>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            //-- goto page login
+            $("#register-btn-to-page-login").click(function () {
+                $.ajax({
+                    url: "pages/login.html",
+                    success: function (data) {
+                        $("body").html(data);
+                    }
+                });
+            });
+
+
+            //-- check felid and register logic
+            $("#register-btn-register").click(function () {
+                if ($("#register-et-username").val() !== "" && $("#register-et-email").val() !== "" && $("#register-et-password").val() !== "") {
+                    if (isValidUsername($("#register-et-username").val())) {
+                        if (isValidEmail($("#register-et-email").val())) {
+                            if (isStrongPassword($("#register-et-password").val())) {
+                                $("#register-tv-alert").text("");
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost/Lrean/server/auth/register.php",
+                                    data: { username: $("#register-et-username").val().trim(), email: $("#register-et-email").val().trim(), password: $("#register-et-password").val().trim() },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.message === "fail")
+                                            $("#register-tv-alert").text("The account creation process was not successful, please try again");
+                                        else if (data.message === "problem")
+                                            $("#register-tv-alert").text("There is an error in the information or data processing, please try again");
+                                        else if (data.message === "exist")
+                                            $("#register-tv-alert").text("Account already exists, please enter another account");
+                                        else if (data.message === "success") {
+                                            $("#register-tv-alert").text("");
+                                            $("#register-tv-done").text("An account has been created successfully");
+                                            setTimeout(function () {
+                                                $.ajax({
+                                                    url: "pages/login.html",
+                                                    success: function (data) {
+                                                        $("body").html(data);
+                                                    }
+                                                });
+                                            }, 1000);
+                                        } else
+                                            $("#register-tv-alert").text("Unexpected error, please try again later");
+                                    },
+                                    error: function (xhr, status, error) {
+                                        $("#register-tv-alert").text("There is an error in the connection or an error in sending");
+                                    }
+                                });
+                            } else
+                                $("#register-tv-alert").text("The password should start with a letter, be longer than 8 characters, and contain symbols and numbers.");
+                        } else
+                            $("#register-tv-alert").text("The email must be real, please verify it");
+                    } else
+                        $("#register-tv-alert").text("Username must be greater than 3 characters and less than or equal to 8 characters");
+
+                } else
+                    $("#register-tv-alert").text("Please fill in the fields in the information");
+            });
+        });
+
+        function isStrongPassword(passwordCheck) {
+            var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{7,}$/;
+            return passwordRegex.test(passwordCheck);
+        }
+
+        function isValidEmail(emailCheck) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(emailCheck);
+        }
+
+        function isValidUsername(usernameCheck) {
+            var usernameRegex = /^[A-Za-zأ-يءئؤإآa-zA-Z]{4,}$/;
+            return usernameRegex.test(usernameCheck);
+        }
+
+    </script>
+
+</body>
+
+</html>
